@@ -37,6 +37,7 @@ def create_student(request: schemas.Details,db: Session = Depends(get_db)):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Please give the valid age")
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Please provide age also")
+    print(payload)
     
     if store.get("address"):
         address_payload = {}
@@ -55,6 +56,7 @@ def create_student(request: schemas.Details,db: Session = Depends(get_db)):
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Please give the valid country")
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Please give the valid country also")
+        print(address_payload)
     
     new_address = models.Address(city=address_payload["city"], country=address_payload["country"])
     db.add(new_address)
