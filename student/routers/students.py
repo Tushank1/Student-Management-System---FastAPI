@@ -37,7 +37,7 @@ def create_student(request: schemas.Details,db: Session = Depends(get_db)):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Please give the valid age")
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Please provide age also")
-    print(payload)
+    # print(payload)
     
     if store.get("address"):
         address_payload = {}
@@ -109,6 +109,9 @@ def destroy(id: int,db: Session = Depends(get_db)):
     student = db.query(models.Student).filter(models.Student.id == id).first()
     if not student:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f"{id} is already not available in the db")
+    address = student.address
+    if address:
+        db.delete(address)
     db.delete(student)
     db.commit()
     return "Deleted"

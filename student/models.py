@@ -9,7 +9,7 @@ class Address(Base):
     city = Column(String)
     country = Column(String)
     
-    students = relationship("Student", back_populates="address", cascade="all, delete-orphan", single_parent=True)
+    students = relationship("Student", back_populates="address", cascade="all, delete", single_parent=True)
 
 class Student(Base):
     __tablename__ = "student"
@@ -17,7 +17,7 @@ class Student(Base):
     id = Column(Integer,primary_key=True,index=True)
     name = Column(String)
     age = Column(Integer)
-    address_id = Column(Integer,ForeignKey('address.id',ondelete="CASCADE"))
+    address_id = Column(Integer,ForeignKey('address.id', ondelete="CASCADE"))
 
     address = relationship("Address", back_populates="students")
     
